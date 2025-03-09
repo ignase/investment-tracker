@@ -12,3 +12,13 @@ Content-Type: application/json
   "price": 2200,
   "currency": "USD"
 }
+
+#### 
+PUT http://localhost:4000/investments/1
+Content-Type: application/json
+
+{
+  "amount": 1500,
+  "price": 8000
+}
+
