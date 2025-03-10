@@ -1,11 +1,14 @@
 import { pool } from "../database/db.js";
+import {
+  createInvestment,
+  getAllInvestments,
+  updateInvestment,
+} from "../models/investmentsModel.js";
 
 export const getAll = async (req, res) => {
   try {
-    const query = `SELECT * FROM investments;`;
-    const result = await pool.query(query);
-
-    res.status(200).json(result.rows);
+    const investments = await getAllInvestments();
+    res.status(200).json(investments);
   } catch (error) {
     res
       .status(500)
@@ -16,12 +19,13 @@ export const getAll = async (req, res) => {
 export const create = async (req, res) => {
   const { name, symbol, amount, price, currency } = req.body;
   try {
-    const query = `INSERT INTO investments (name, symbol, amount, price, currency) VALUES ($1, $2, $3, $4, $5) RETURNING *;`;
-    const values = [name, symbol, amount, price, currency];
-
-    const result = await pool.query(query, values);
-    const newInvestment = result.rows[0];
-
+    const newInvestment = await createInvestment(
+      name,
+      symbol,
+      amount,
+      price,
+      currency
+    );
     res.status(201).json(newInvestment);
   } catch (error) {
     console.error(error);
@@ -30,88 +34,21 @@ export const create = async (req, res) => {
 };
 
 export const update = async (req, res) => {
-  const { name, symbol, amount, price, currency } = req.body;
   const { id } = req.params;
+  const data = req.body;
 
   try {
-    // Hacer la query para obtener la inversión WHERE id = $1
-    const query = `SELECT * FROM investments WHERE id = $1;`;
-    const result = await pool.query(query, [id]); // Corrección aquí
+    const updated = await updateInvestment(id, data);
 
-    if (result.rows.length === 0) {
-      return res.status(404).send("Investment not found");
+    if (!updated) {
+      return res.status(404).json({ message: "Investment not found" });
     }
 
-    const investment = result.rows[0];
-
-    const updateFields = [];
-    const updateValues = [];
-
-    // Solo agregamos al arreglo aquellos campos que no sean undefined
-    if (name !== undefined) {
-      updateFields.push("name = $1");
-      updateValues.push(name);
-    } else {
-      updateFields.push("name = $1");
-      updateValues.push(investment.name);
-    }
-
-    if (symbol !== undefined) {
-      updateFields.push("symbol = $2");
-      updateValues.push(symbol);
-    } else {
-      updateFields.push("symbol = $2");
-      updateValues.push(investment.symbol);
-    }
-
-    if (amount !== undefined) {
-      updateFields.push("amount = $3");
-      updateValues.push(amount);
-    } else {
-      updateFields.push("amount = $3");
-      updateValues.push(investment.amount);
-    }
-
-    if (price !== undefined) {
-      updateFields.push("price = $4");
-      updateValues.push(price);
-    } else {
-      updateFields.push("price = $4");
-      updateValues.push(investment.price);
-    }
-
-    if (currency !== undefined) {
-      updateFields.push("currency = $5");
-      updateValues.push(currency);
-    } else {
-      updateFields.push("currency = $5");
-      updateValues.push(investment.currency);
-    }
-
-    // Si no hay campos para actualizar, lanzamos un error
-    if (updateFields.length === 0) {
-      return res.status(400).send("No fields to update");
-    }
-
-    // Agregar el id al final de los valores
-    updateValues.push(id);
-
-    // Construir la consulta de actualización
-    const updateQuery = `
-      UPDATE investments
-      SET ${updateFields.join(", ")}
-      WHERE id = $${updateValues.length}  -- Corrección aquí
-      RETURNING *;
-    `;
-
-    // Ejecutamos la consulta de actualización
-    const updateResult = await pool.query(updateQuery, updateValues);
-
-    // Devolvemos la inversión actualizada
-    res.status(200).json(updateResult.rows[0]);
+    res.status(200).json(updated);
   } catch (error) {
-    console.error(error);
-    res.status(500).send("Error al actualizar la inversión");
+    res
+      .status(500)
+      .json({ message: "Error updating investment", error: error.message });
   }
 };
 
@@ -139,3 +76,10 @@ export const deleteInvestment = async (req, res) => {
     });
   }
 };
+
+//TODO:
+//IMPLEMENTAR EL LOGIN, REGISTER, LOGOUT Y PROTECTED!!!!
+// export const login = async (req, res) => {};
+// export const register = async (req, res) => {};
+// export const logout = async (req, res) => {};
+// export const protectedLink = async (req, res) => {};

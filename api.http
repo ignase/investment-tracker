@@ -23,5 +23,5 @@ Content-Type: application/json
 }
 
 ###
-DELETE http://localhost:4000/investments/2
+DELETE http://localhost:4000/investments/1
 Content-Type: application/json
