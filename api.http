@@ -1,4 +1,4 @@
-####
+#### <<<<<<<<<<INVESTMENTS>>>>>>>>>>
 GET http://localhost:4000/investments
 
 ####
@@ -14,7 +14,7 @@ Content-Type: application/json
 }
 
 #### 
-PUT http://localhost:4000/investments/1
+PUT http://localhost:4000/investments/9ca7445f-6b4b-425c-8d96-6992ca6b5223
 Content-Type: application/json
 
 {
@@ -23,5 +23,15 @@ Content-Type: application/json
 }
 
 ###
-DELETE http://localhost:4000/investments/1
+DELETE http://localhost:4000/investments/00c43c20-40b1-42c7-a89a-0c328dcedd88
 Content-Type: application/json
+
+### <<<<<<<<<<< USERS >>>>>>>>>>>
+POST http://localhost:4000/auth/signup
+Content-Type: application/json
+
+{
+  "name": "John Doe",
+  "email": "johndoe@example.com",
+  "password": "password123"
+}

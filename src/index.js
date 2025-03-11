@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import { getCryptoData } from "./api.js";
 import investmentsRoutes from "./routes/investmentsRoutes.js";
+import authRoutes from "./routes/authRoutes.js";
 
 dotenv.config();
 const PORT = process.env.PORT ?? 4000;
@@ -13,6 +14,7 @@ app.use(cors());
 
 //Rutas
 app.use("/investments", investmentsRoutes);
+app.use("/auth", authRoutes);
 
 // app.get("/crypto/:id", async (req, res) => {
 //   const { id } = req.params;

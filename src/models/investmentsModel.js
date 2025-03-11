@@ -97,3 +97,14 @@ export const updateInvestment = async (id, data) => {
     throw new Error(error.message);
   }
 };
+
+export const deleteInvestmentModel = async (id) => {
+  // Eliminar y devolver el registro eliminado
+  const query = `DELETE FROM investments WHERE id = $1 RETURNING *;`;
+  const { rows } = await pool.query(query, [id]);
+  // Si no hay registros eliminados, significa que el ID no existe
+  if (rows.length === 0) {
+    return res.status(404).json({ message: "Investment not found" });
+  }
+  return rows;
+};
