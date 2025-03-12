@@ -1,23 +1,50 @@
 import { pool } from "../database/db.js";
 
-export const getAllInvestments = async () => {
-  const query = `SELECT * FROM investments;`;
-  const { rows } = await pool.query(query);
-  return rows;
+export const getUserInvestments = async (userId) => {
+  const query = `SELECT * FROM investments 
+                 JOIN users_investments ON investments.id = users_investments.investment_id 
+                 WHERE users_investments.user_id = $1;`;
+  const values = [userId];
+
+  const result = await pool.query(query, values);
+  return result.rows;
 };
 
 export const createInvestment = async (
+  userId,
   name,
   symbol,
   amount,
   price,
-  currency
+  currency,
+  sale_date
 ) => {
-  const query = `INSERT INTO investments (name, symbol, amount, price, currency) VALUES ($1, $2, $3, $4, $5) RETURNING *;`;
-  const values = [name, symbol, amount, price, currency];
+  try {
+    // Primero insertamos la inversión en la tabla investments
+    const queryInvestment = `INSERT INTO investments (name, symbol, amount, price, currency) 
+                             VALUES ($1, $2, $3, $4, $5) 
+                             RETURNING id;`;
+    const valuesInvestment = [name, symbol, amount, price, currency];
+    const resultInvestment = await pool.query(
+      queryInvestment,
+      valuesInvestment
+    );
+    const investmentId = resultInvestment.rows[0].id;
 
-  const { rows } = await pool.query(query, values);
-  return rows[0];
+    // Luego insertamos en la tabla users_investments para asociar la inversión con el usuario
+    const queryAssociation = `INSERT INTO users_investments (user_id, investment_id, amount, purchase_date, sale_date) 
+                              VALUES ($1, $2, $3, NOW(), $4);`;
+    const valuesAssociation = [userId, investmentId, amount, sale_date];
+    await pool.query(queryAssociation, valuesAssociation);
+
+    return {
+      message: "Investment created and associated with the user",
+      investmentId,
+    };
+  } catch (error) {
+    console.error(error);
+    throw new Error("Error creating investment: " + error.message);
+  }
 };
 
 export const updateInvestment = async (id, data) => {

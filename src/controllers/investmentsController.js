@@ -1,14 +1,15 @@
 import { pool } from "../database/db.js";
 import {
   createInvestment,
-  getAllInvestments,
+  getUserInvestments,
   updateInvestment,
   deleteInvestmentModel,
 } from "../models/investmentsModel.js";
 
 export const getAll = async (req, res) => {
   try {
-    const investments = await getAllInvestments();
+    const userId = req.user.id;
+    const investments = await getUserInvestments(userId);
     res.status(200).json(investments);
   } catch (error) {
     res
@@ -18,25 +19,35 @@ export const getAll = async (req, res) => {
 };
 
 export const create = async (req, res) => {
-  const { name, symbol, amount, price, currency } = req.body;
   try {
-    const newInvestment = await createInvestment(
+    const { name, symbol, amount, price, currency, sale_date } = req.body;
+    const userId = req.user.id; // Obtén el ID del usuario desde req.user
+
+    if (amount === undefined || amount === null) {
+      return res.status(400).json({ error: "Amount is required" });
+    }
+    // Llamada al modelo para crear la inversión
+    const investment = await createInvestment(
+      userId,
       name,
       symbol,
       amount,
       price,
-      currency
+      currency,
+      sale_date
     );
-    res.status(201).json(newInvestment);
+    res.status(201).json(investment);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Investment not created properly: ", error });
+    res
+      .status(500)
+      .json({ error: "Error creating investment", details: error.message });
   }
 };
 
 export const update = async (req, res) => {
   const { id } = req.params;
   const data = req.body;
+  const userId = req.user.id;
 
   try {
     const updated = await updateInvestment(id, data);

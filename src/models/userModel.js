@@ -24,3 +24,15 @@ export const findUserByEmail = async (email) => {
     throw new Error("Error finding user: " + error.message);
   }
 };
+
+export const findUserById = async (userId) => {
+  try {
+    const result = await pool.query("SELECT * FROM users WHERE id = $1", [
+      userId,
+    ]);
+    return result.rows[0]; // Devuelve el primer usuario que coincide con el userId
+  } catch (error) {
+    console.error("Error finding user by ID:", error);
+    throw error; // Lanza el error si algo sale mal
+  }
+};
