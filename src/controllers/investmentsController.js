@@ -47,20 +47,23 @@ export const create = async (req, res) => {
 export const update = async (req, res) => {
   const { id } = req.params;
   const data = req.body;
-  const userId = req.user.id;
+  const userId = req.user.id; // Usuario logueado
 
   try {
-    const updated = await updateInvestment(id, data);
+    const updated = await updateInvestment(userId, id, data);
 
     if (!updated) {
-      return res.status(404).json({ message: "Investment not found" });
+      return res.status(404).json({
+        message: "Investment not found or not owned by user",
+      });
     }
 
     res.status(200).json(updated);
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Error updating investment", error: error.message });
+    res.status(500).json({
+      message: "Error updating investment",
+      error: error.message,
+    });
   }
 };
 
@@ -79,10 +82,3 @@ export const deleteInvestment = async (req, res) => {
     });
   }
 };
-
-//TODO:
-//IMPLEMENTAR EL LOGIN, REGISTER, LOGOUT Y PROTECTED!!!!
-// export const login = async (req, res) => {};
-// export const register = async (req, res) => {};
-// export const logout = async (req, res) => {};
-// export const protectedLink = async (req, res) => {};

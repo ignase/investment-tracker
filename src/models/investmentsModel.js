@@ -47,79 +47,38 @@ export const createInvestment = async (
   }
 };
 
-export const updateInvestment = async (id, data) => {
+export const updateInvestment = async (userId, investmentId, data) => {
   try {
-    // Obtener la inversión antes de actualizar
-    const { rows } = await pool.query(
-      `SELECT * FROM investments WHERE id = $1;`,
-      [id]
-    );
-
-    if (rows.length === 0) {
-      return null; // Indica que no se encontró la inversión
-    }
-    const investment = rows[0];
-
     const updateFields = [];
     const updateValues = [];
 
-    // Solo agregamos al arreglo aquellos campos que no sean undefined
-    if (data.name !== undefined) {
-      updateFields.push("name = $1");
-      updateValues.push(data.name);
-    } else {
-      updateFields.push("name = $1");
-      updateValues.push(investment.name);
-    }
-
-    if (data.symbol !== undefined) {
-      updateFields.push("symbol = $2");
-      updateValues.push(data.symbol);
-    } else {
-      updateFields.push("symbol = $2");
-      updateValues.push(investment.symbol);
-    }
-
     if (data.amount !== undefined) {
-      updateFields.push("amount = $3");
+      updateFields.push("amount = $1");
       updateValues.push(data.amount);
-    } else {
-      updateFields.push("amount = $3");
-      updateValues.push(investment.amount);
     }
 
-    if (data.price !== undefined) {
-      updateFields.push("price = $4");
-      updateValues.push(data.price);
-    } else {
-      updateFields.push("price = $4");
-      updateValues.push(investment.price);
-    }
-
-    if (data.currency !== undefined) {
-      updateFields.push("currency = $5");
-      updateValues.push(data.currency);
-    } else {
-      updateFields.push("currency = $5");
-      updateValues.push(investment.currency);
+    if (data.sale_date !== undefined) {
+      updateFields.push("sale_date = $2");
+      updateValues.push(data.sale_date);
     }
 
     if (updateFields.length === 0) {
       throw new Error("No fields to update");
     }
 
-    updateValues.push(id); // Agregar el id al final de los valores
+    updateValues.push(userId, investmentId); // Agregar IDs al final
 
     const updateQuery = `
-      UPDATE investments
+      UPDATE users_investments
       SET ${updateFields.join(", ")}
-      WHERE id = $${updateValues.length}
+      WHERE user_id = $${updateValues.length - 1} 
+        AND investment_id = $${updateValues.length}
       RETURNING *;
     `;
 
     const updateResult = await pool.query(updateQuery, updateValues);
 
-    return updateResult.rows[0]; // Retorna la inversión actualizada
+    return updateResult.rows[0] || null; // Retorna la inversión actualizada o null si no existía
   } catch (error) {
     throw new Error(error.message);
   }

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrackYourShares</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./styles/style.css">
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container">
+            <a class="navbar-brand" href="#">TrackYourShares - TYS</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#">-</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#markets">Markets</a></li>
+                    <li class="nav-item"><a class="nav-link btn btn-secondary text-white px-3" href="#">Signup</a></li>
+                    <li class="nav-item"><a class="nav-link btn btn-primary text-white px-3"
+                            href="./login.html">Login</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="hero">
+        <h1>Your investment tracker platform</h1>
+        <p>Manage all your investments in one place.</p>
+    </div>
+
+    <div class="container mt-5">
+        <h2 class="text-center">Key Market Indices</h2>
+        <div class="row text-center">
+            <div class="col-md-3">
+                <div class="card shadow-sm p-3 mb-4 bg-white rounded">
+                    <h5 class="card-title">S&P 500</h5>
+                    <p class="card-text">4,500 (+1.2%)</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card shadow-sm p-3 mb-4 bg-white rounded">
+                    <h5 class="card-title">MSCI World</h5>
+                    <p class="card-text">3,200 (+0.8%)</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card shadow-sm p-3 mb-4 bg-white rounded">
+                    <h5 class="card-title">NASDAQ 100 (QQQ)</h5>
+                    <p class="card-text">15,000 (+1.5%)</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card shadow-sm p-3 mb-4 bg-white rounded">
+                    <h5 class="card-title">Bitcoin (BTC)</h5>
+                    <p class="card-text">$67,500 (+2.5%)</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="markets" class="container mt-5">
+        <h2 class="text-center">Markets</h2>
+        <p class="text-center">Check the latest prices for popular cryptocurrencies and stocks.</p>
+
+        <div class="row">
+            <div class="col-md-6">
+                <h4>Cryptocurrency Prices</h4>
+                <table class="table table-striped">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Crypto</th>
+                            <th>Price</th>
+                            <th>Change</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Bitcoin (BTC)</td>
+                            <td>$67,500</td>
+                            <td class="text-success">+2.5%</td>
+                        </tr>
+                        <tr>
+                            <td>Ethereum (ETH)</td>
+                            <td>$3,800</td>
+                            <td class="text-danger">-1.2%</td>
+                        </tr>
+                        <tr>
+                            <td>Cardano (ADA)</td>
+                            <td>$1.25</td>
+                            <td class="text-success">+3.8%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-6">
+                <h4>Stock Prices</h4>
+                <table class="table table-striped">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Stock</th>
+                            <th>Price</th>
+                            <th>Change</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Apple (AAPL)</td>
+                            <td>$174.80</td>
+                            <td class="text-success">+1.1%</td>
+                        </tr>
+                        <tr>
+                            <td>Microsoft (MSFT)</td>
+                            <td>$322.45</td>
+                            <td class="text-danger">-0.8%</td>
+                        </tr>
+                        <tr>
+                            <td>Tesla (TSLA)</td>
+                            <td>$890.20</td>
+                            <td class="text-success">+2.0%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+<footer class="bg-dark-green text-light py-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 text-center">
+                <h5>About Us</h5>
+                <p>We are an investment tracking platform that allows you to monitor the performance of your
+                    cryptocurrencies and stocks in real-time. We offer a simple and effective way to manage your
+                    investment portfolio.</p>
+            </div>
+            <div class="col-md-4 text-center">
+                <h5>Useful Links</h5>
+                <ul class="list-unstyled">
+                    <li><a href="/about" class="text-light">About Us</a></li>
+                    <li><a href="/contact" class="text-light">Contact</a></li>
+                    <li><a href="/privacy" class="text-light">Privacy Policy</a></li>
+                    <li><a href="/terms" class="text-light">Terms and Conditions</a></li>
+                </ul>
+            </div>
+            <div class="col-md-4 text-center">
+                <h5>Contact</h5>
+                <p>Email: contacto@ignasedev.com</p>
+                <p>Address: Example Street, 123, Gdansk, Poland</p>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col text-center">
+                <p class="small">&copy; 2025 Ignasedev. All rights reserved.</p>
+                <p class="small">The information provided on this platform does not constitute financial advice.
+                    Investing involves risks, and past performance does not guarantee future results.</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+</html>

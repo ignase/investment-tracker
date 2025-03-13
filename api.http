@@ -31,9 +31,9 @@ POST http://localhost:4000/auth/signup
 Content-Type: application/json
 
 {
-  "name": "John Doe",
-  "email": "johndoe@example.com",
-  "password": "password123"
+  "name": "Ignacio sep",
+  "email": "ignaciosepulveda@gmail.com",
+  "password": "Contraseña123"
 }
 
 ### LOGIN DE UN USUARIO
@@ -41,18 +41,18 @@ POST http://localhost:4000/auth/login
 Content-Type: application/json
 
 {
-  "email": "johndoe@example.com",
-  "password": "password123"
+  "email": "ignaciosepulveda@gmail.com",
+  "password": "Contraseña123"
 }
 
 ### DEVOLVER INVESTMENTS DEL USUARIO LOGEADO
 GET http://localhost:4000/investments
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJkNmQ1NTAxNy03MTg0LTQyNGMtOGJjNS1iOTNlZWNjNTk0ZjgiLCJpYXQiOjE3NDE3MTE2NjksImV4cCI6MTc0MTcxNTI2OX0.Pm9LW_LG8kE4jzIYLhjctQVxTHL2vprR7OkE-HkPSEU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJkNmQ1NTAxNy03MTg0LTQyNGMtOGJjNS1iOTNlZWNjNTk0ZjgiLCJpYXQiOjE3NDE3ODc0NTMsImV4cCI6MTc0MTc5MTA1M30.9Bu_rn2vCthGVfHmwbqPl3DIf3Cv484c271EcxNvvIQ
 
 ###
 POST http://localhost:4000/investments
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJkNmQ1NTAxNy03MTg0LTQyNGMtOGJjNS1iOTNlZWNjNTk0ZjgiLCJpYXQiOjE3NDE3ODczMDUsImV4cCI6MTc0MTc5MDkwNX0.NLdcNSHEwBn4gut4-QgmyBsvj0dXoIi62cUZQ6dWeZs
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJkNmQ1NTAxNy03MTg0LTQyNGMtOGJjNS1iOTNlZWNjNTk0ZjgiLCJpYXQiOjE3NDE3ODc0NTMsImV4cCI6MTc0MTc5MTA1M30.9Bu_rn2vCthGVfHmwbqPl3DIf3Cv484c271EcxNvvIQ
 
   {
   "name": "Bitcoin",
@@ -61,4 +61,13 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJkNmQ1N
   "price": 50000,
   "currency": "USD"
 
+}
+### USAR LA INVESTMENT_ID NO LA DEL USUARIO
+###UPDATE INVESTMENT
+PUT http://localhost:4000/investments/a8c0d019-1caa-4926-bb16-923231caa4c1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJkNmQ1NTAxNy03MTg0LTQyNGMtOGJjNS1iOTNlZWNjNTk0ZjgiLCJpYXQiOjE3NDE3ODk0NDAsImV4cCI6MTc0MTg3NTg0MH0.1FxoAV2U3yW_JjqXuqumjo0jaVOQ6ZS_xeVCiYzEAUs
+
+{
+  "amount": 15
 }
